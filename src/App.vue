@@ -13,7 +13,11 @@
         placeholder="...but first write them here!"
       />
       <button @click="addTask">Add Task</button>
-      <ul v-show="listStatus === 'Hide List'">
+      <button @click="toggleList" v-if="tasks.length > 0">
+        {{ listStatusCaption }}
+      </button>
+      <button @click="clearList" v-if="tasks.length > 0">Clear List</button>
+      <ul v-show="listStatusCaption === 'Hide List'">
         <li
           v-for="(task, index) in tasks"
           :key="task"
@@ -22,16 +26,11 @@
           {{ task }}
           <font-awesome-icon
             :icon="['fas', 'trash-alt']"
-            :style="fontAwesomeStyle"
+            class="trash-icon"
             @click.stop="removeTask(index)"
           />
         </li>
       </ul>
-
-      <button @click="toggleList" v-if="tasks.length > 0">
-        {{ listStatus }}
-      </button>
-      <button @click="clearList" v-if="tasks.length > 0">Clear List</button>
     </section>
   </div>
 </template>
@@ -42,18 +41,13 @@ export default {
     return {
       enteredTaskValue: '',
       tasks: [],
-      listStatus: 'Hide List',
-      fontAwesomeStyle: {
-        marginLeft: '50px',
-        fontSize: '0.9rem',
-        verticalAlign: '0',
-      },
+      listStatusCaption: 'Hide List',
     };
   },
 
   methods: {
     addTask() {
-      if (this.enteredTaskValue != '') {
+      if (this.enteredTaskValue !== '') {
         this.tasks.push(this.enteredTaskValue);
         this.enteredTaskValue = '';
       }
@@ -68,11 +62,8 @@ export default {
     },
 
     toggleList() {
-      if (this.listStatus === 'Hide List') {
-        this.listStatus = 'Show List';
-      } else {
-        this.listStatus = 'Hide List';
-      }
+      this.listStatusCaption =
+        this.listStatusCaption === 'Hide List' ? 'Show List' : 'Hide List';
     },
 
     clearList() {
@@ -89,7 +80,7 @@ export default {
   --font: Roboto, sans-serif;
   --textColor: #374961;
   --mainColor: #c44800;
-  --secondColor: #ff7b2e;
+  --secondColor: #eee;
   --hoverColor: #9c3900;
 }
 
@@ -143,6 +134,12 @@ export default {
       padding: 0.5rem 50px;
       color: white;
       border-radius: 7px;
+
+      .trash-icon {
+        margin-left: 50px;
+        font-size: 0.9rem;
+        vertical-align: 0;
+      }
     }
 
     .line {

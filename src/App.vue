@@ -37,7 +37,7 @@
 
 <script>
 export default {
-  name: AppToDo,
+  name: 'AppToDo',
   data() {
     return {
       enteredTaskValue: '',

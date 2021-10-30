@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app-to-do">
     <header>
       <h1>Classic ToDo in Vue</h1>
     </header>
@@ -37,6 +37,7 @@
 
 <script>
 export default {
+  name: AppToDo,
   data() {
     return {
       enteredTaskValue: '',

@@ -1,14 +1,14 @@
 {
-  "name": "vue-webpack-setup",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "vue-todo-ninjaonbreak",
+  "version": "0.1.5",
+  "description": "Simple ToDo App in Vue",
+  "main": "./src/main.js",
   "scripts": {
     "build": "webpack --mode production",
     "start": "webpack-dev-server --mode development"
   },
   "keywords": [],
-  "author": "",
+  "author": "ninjaOnBreak",
   "license": "ISC",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",

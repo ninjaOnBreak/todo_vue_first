@@ -12,23 +12,28 @@
         @keydown.enter="addTask"
         placeholder="...but first write them here!"
       />
-      <button @click="addTask">Add Task</button>
-      <button @click="toggleList" v-if="tasks.length > 0">
-        {{ listStatusCaption }}
+      <button @click="addTask">
+        Add Task <box-icon name="calendar-plus" color="#ffffff"></box-icon>
       </button>
-      <button @click="clearList" v-if="tasks.length > 0">Clear List</button>
+      <div class="manage-list">
+        <button @click="toggleList" v-if="tasks.length > 0">
+          {{ listStatusCaption }}
+        </button>
+        <button @click="clearList" v-if="tasks.length > 0">Clear List</button>
+      </div>
       <ul v-show="listStatusCaption === 'Hide List'">
-        <li
-          v-for="(task, index) in tasks"
-          :key="task"
-          @click="toggleDone($event)"
-        >
-          {{ task }}
-          <font-awesome-icon
-            :icon="['fas', 'trash-alt']"
-            class="trash-icon"
+        <li v-for="(task, index) in tasks" :key="task">
+          <span @click="toggleDone($event)">{{ task }}</span>
+          <box-icon
+            class="icon-done"
+            name="calendar-check"
+            color="#ffffff"
+          ></box-icon>
+          <box-icon
+            name="calendar-x"
+            color="#ffffff"
             @click.stop="removeTask(index)"
-          />
+          ></box-icon>
         </li>
       </ul>
     </section>
@@ -56,6 +61,7 @@ export default {
 
     toggleDone(event) {
       event.target.classList.toggle('line');
+      console.log(event);
     },
 
     removeTask(id) {
@@ -74,18 +80,23 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
 
-:root {
+// :root {
+//   --font: Roboto, sans-serif;
+//   --textColor: #374961;
+//   --mainColor: #c44800;
+//   --secondColor: #eee;
+//   --hoverColor: #9c3900;
+// }
+
+#app-to-do {
   --font: Roboto, sans-serif;
   --textColor: #374961;
   --mainColor: #c44800;
   --secondColor: #eee;
   --hoverColor: #9c3900;
-}
-
-#app {
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -128,23 +139,28 @@ export default {
     }
 
     li {
-      margin: 0.5rem 0;
+      margin: 5px;
       font-size: 1.25rem;
       // font-weight: bold;
       background-color: var(--mainColor);
-      padding: 0.5rem 50px;
+      padding: 10px 10px 10px 50px;
       color: white;
       border-radius: 7px;
 
-      .trash-icon {
-        margin-left: 50px;
-        font-size: 0.9rem;
-        vertical-align: 0;
+      box-icon {
+        margin: 0;
+        vertical-align: bottom;
+        cursor: pointer;
+      }
+
+      .icon-done {
+        margin-left: 20px;
       }
     }
 
     .line {
       text-decoration: line-through;
+      color: #ffa673;
     }
 
     input {
@@ -170,8 +186,12 @@ export default {
       border-radius: 5px;
       background-color: var(--mainColor);
       color: white;
-      padding: 0.05rem 1rem;
+      padding: 5px 15px 7px;
       box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.26);
+
+      box-icon {
+        vertical-align: bottom;
+      }
     }
 
     button:hover,
@@ -179,6 +199,15 @@ export default {
       background-color: var(--hoverColor);
       border-color: var(--hoverColor);
       box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.26);
+    }
+
+    .manage-list {
+      display: flex;
+      justify-content: center;
+
+      button {
+        margin: 0 10px;
+      }
     }
   }
 }
